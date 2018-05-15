@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace AnneProKeyboard
@@ -77,6 +71,22 @@ namespace AnneProKeyboard
 
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        protected override async void OnFileActivated(FileActivatedEventArgs args)
+        {
+            // TODO: Handle file activation
+            // The number of files received is args.Files.Size
+            // The name of the first file is args.Files[0].Name
+            Frame rootFrame = Window.Current.Content as Frame;
+            MainPage content = rootFrame.Content as MainPage;
+            StorageFile profile = args.Files[0] as StorageFile;
+            using (IInputStream inStream = await profile.OpenSequentialReadAsync())
+            {
+                DataContractSerializer serialiser = new DataContractSerializer(typeof(KeyboardProfileItem));
+                KeyboardProfileItem kpi = (KeyboardProfileItem)serialiser.ReadObject(inStream.AsStreamForRead());
+                content.KeyboardProfiles.Add(kpi);
+            }
         }
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)

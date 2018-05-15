@@ -78,13 +78,6 @@ namespace AnneProKeyboard
             lightingPage = new LightingPage();
         }
 
-        //private void KeyboardProfiles_ItemClick(object sender, ItemClickEventArgs e)
-        //{
-        //    //KeyboardProfileItem profile = (e.ClickedItem as KeyboardProfileItem);
-        //    (this._frame.Content as IContentPage).ChangeSelectedProfile(profile);
-        //    this.selectedProfile = ProfilesCombo.SelectedItem as KeyboardProfileItem;
-        //}
-
         private void ProfileAddButton_Click(object sender, RoutedEventArgs e)
         {
             this.CreateNewKeyboardProfile();
