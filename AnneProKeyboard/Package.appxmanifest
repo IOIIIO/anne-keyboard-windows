@@ -26,7 +26,7 @@
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="kpi">
-            <uap:Logo>Assets\Square44x44Logo.scale-200.png</uap:Logo>
+            <uap:Logo>Assets\kpi.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.kpi</uap:FileType>
             </uap:SupportedFileTypes>

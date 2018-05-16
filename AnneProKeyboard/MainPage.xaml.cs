@@ -649,5 +649,37 @@ namespace AnneProKeyboard
                 ProfilesCombo.SelectedIndex = 0;
             }
         }
+
+        private async void ShareButton_Click(object sender, RoutedEventArgs e)
+        {
+            MemoryStream memory_stream = new MemoryStream();
+            DataContractSerializer serialiser = new DataContractSerializer(typeof(KeyboardProfileItem));
+            serialiser.WriteObject(memory_stream, (KeyboardProfileItem)ProfilesCombo.SelectedItem);
+
+            try
+            {
+                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(((KeyboardProfileItem)ProfilesCombo.SelectedItem).Label + ".kpi", CreationCollisionOption.ReplaceExisting);
+                using (Stream file_stream = await file.OpenStreamForWriteAsync())
+                {
+                    memory_stream.Seek(0, SeekOrigin.Begin);
+                    await memory_stream.CopyToAsync(file_stream);
+                    await file_stream.FlushAsync();
+                    this.SyncStatus.Text = "Profile Shared!";
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            catch (FileLoadException)
+            {
+                this.SyncStatus.Text = "Failed to load file. Profiles not saved.";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Uncaught Exception");
+                Console.Write(ex);
+            }
+        }
     }
 }

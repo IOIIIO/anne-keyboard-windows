@@ -29,11 +29,14 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Background="Transparent"
-                            OverflowButtonVisibility="Collapsed" Margin="0,0,15,0" FontSize="11">
+                             Margin="0,0,15,0" FontSize="11">
                         <AppBarButton Icon="Add" Click="ProfileAddButton_Click"/>
                         <AppBarSeparator/>
                     <AppBarButton Icon="Edit" Click="ProfileEditButton_Click"/>
                     <AppBarButton Icon="Delete" Click="ProfileDeleteButton_Click"/>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Icon="Share" Label="Share" Click="ShareButton_Click"/>
+                    </CommandBar.SecondaryCommands>
                 </CommandBar>
             </DataTemplate>
         </NavigationView.HeaderTemplate>
@@ -50,7 +53,7 @@
                 </Grid.Resources>
                 <StackPanel  Grid.Row="0">
                     <ComboBox x:Name="ProfilesCombo" Height="35" Width="270"
-                    ItemsSource="{x:Bind KeyboardProfiles}" HorizontalAlignment="Right" Margin="0,-41,262,0" SelectionChanged="ProfilesCombo_SelectionChanged"  Loaded="ProfilesCombo_Loaded">
+                    ItemsSource="{x:Bind KeyboardProfiles}" HorizontalAlignment="Right" Margin="0,-41,305,0" SelectionChanged="ProfilesCombo_SelectionChanged"  Loaded="ProfilesCombo_Loaded">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Grid.Row="3">

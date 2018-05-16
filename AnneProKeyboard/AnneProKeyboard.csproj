@@ -127,9 +127,9 @@
     <None Include="AnneProKeyboard_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\kpi.png" />
     <Content Include="Assets\README.html" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
-    <Content Include="Assets\controls.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
