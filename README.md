@@ -11,42 +11,32 @@ The keyboard has to be in L0 mode by: pressing ```Fn+B, Fn+0, ESC, Fn+B, +```
 * Install the app by extracting the zip file, and right-clicking on ```Add-AppDevPackage.ps1``` and select ```Run with PowerShell```. 
 * The app should now be installed and will be on Start menu.
 
-## Features
-* Automatic keyboard pairing [x]
-* Create and manage profiles [x]
-* Set keyboard backlight colours [x]
+## Features 
+### Core
+- [x] Automatic keyboard pairing
+- [x] Create and manage profiles
+- [x] Set keyboard backlight colours
+- [x] Set keyboard layout
 
 ### Statistics
-Logging
-Metrics
-- how many using
-- version fragmentation
-.kpi file extension [x]
-.kpis
-Share profile
-Export profile [x]
-- SaveDialog
-Importing profiles [x]
+- [ ] Logging
+- [ ] Metrics (performance, crashing, etc.)
+- [x] .kpi file extension
+- [ ] .kpis
+- [ ] Share profile
+- [x] Export profile
+- [ ] Choosing export location
+- [x] Importing profiles
 
 ### Versioning
-new version
-Check
-Save settings
-Yes, dl
-Save profiles
-Delete
-Install
+- [ ] Automatic updating
+- [ ] Version fragmentation data
 
 ### Sharing
-kpi sharing site
-Upload
-	Azure function
-	Validate
-	Save to db (is only XML, so can)
-	use
+- [ ] .kpi sharing site
 
 ## Bugs
-Use GitHub issue tracker
+See GitHub issue tracker
 
 ## License
 The codebase and the project are released under the permissive MIT License. 
