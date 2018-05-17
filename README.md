@@ -1,5 +1,5 @@
 # Anne Keyboard Windows
-A Universal Windows App for controlling the an Anne Pro keyboard over Bluetooth Low Energy.  
+A Universal Windows App for controlling the Obins Anne Pro keyboard over Bluetooth Low Energy.  
 
 ## Requirements
 This app has been tested against Windows 10. Other version of Windows is not supported due to Universal Windows App (UWP) platform only supporting Windows 10.
