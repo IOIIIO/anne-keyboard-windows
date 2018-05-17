@@ -18,22 +18,22 @@ The keyboard has to be in L0 mode by: pressing ```Fn+B, Fn+0, ESC, Fn+B, +```
 - [x] Set keyboard backlight colours
 - [x] Set keyboard layout
 
+### Sharing
+- [x] .kpi file extension
+- [x] Export profile
+- [x] Importing profiles
+- [ ] .kpis
+- [ ] Share profile
+- [ ] Choosing export location
+- [ ] .kpi sharing site
+
 ### Statistics
 - [ ] Logging
 - [ ] Metrics (performance, crashing, etc.)
-- [x] .kpi file extension
-- [ ] .kpis
-- [ ] Share profile
-- [x] Export profile
-- [ ] Choosing export location
-- [x] Importing profiles
 
 ### Versioning
 - [ ] Automatic updating
 - [ ] Version fragmentation data
-
-### Sharing
-- [ ] .kpi sharing site
 
 ## Bugs
 See GitHub issue tracker
