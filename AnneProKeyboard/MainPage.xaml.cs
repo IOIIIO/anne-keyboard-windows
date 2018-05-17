@@ -652,13 +652,24 @@ namespace AnneProKeyboard
 
         private async void ShareButton_Click(object sender, RoutedEventArgs e)
         {
-            MemoryStream memory_stream = new MemoryStream();
-            DataContractSerializer serialiser = new DataContractSerializer(typeof(KeyboardProfileItem));
-            serialiser.WriteObject(memory_stream, (KeyboardProfileItem)ProfilesCombo.SelectedItem);
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.SuggestedStartLocation =
+                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add("Keyboard Profile Item", new List<string>() { ".kpi" });
+            // Default file name if the user does not type one in or select a file to replace
+            savePicker.SuggestedFileName = ((KeyboardProfileItem)ProfilesCombo.SelectedItem).Label;
 
-            try
+            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null)
             {
-                StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(((KeyboardProfileItem)ProfilesCombo.SelectedItem).Label + ".kpi", CreationCollisionOption.ReplaceExisting);
+                // Prevent updates to the remote version of the file until
+                // we finish making changes and call CompleteUpdatesAsync.
+                Windows.Storage.CachedFileManager.DeferUpdates(file);
+                // write to file
+                MemoryStream memory_stream = new MemoryStream();
+                DataContractSerializer serialiser = new DataContractSerializer(typeof(KeyboardProfileItem));
+                serialiser.WriteObject(memory_stream, (KeyboardProfileItem)ProfilesCombo.SelectedItem);
                 using (Stream file_stream = await file.OpenStreamForWriteAsync())
                 {
                     memory_stream.Seek(0, SeekOrigin.Begin);
@@ -666,20 +677,26 @@ namespace AnneProKeyboard
                     await file_stream.FlushAsync();
                     this.SyncStatus.Text = "Profile Shared!";
                 }
+                // Let Windows know that we're finished changing the file so
+                // the other app can update the remote version of the file.
+                // Completing updates may require Windows to ask for user input.
+                Windows.Storage.Provider.FileUpdateStatus status =
+                    await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(file);
+
+                
+                if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
+                {
+                }
+                else
+                {
+                }
             }
-            catch (UnauthorizedAccessException)
+            else
             {
-                throw new UnauthorizedAccessException();
             }
-            catch (FileLoadException)
-            {
-                this.SyncStatus.Text = "Failed to load file. Profiles not saved.";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Uncaught Exception");
-                Console.Write(ex);
-            }
+            
+
+           
         }
     }
 }
