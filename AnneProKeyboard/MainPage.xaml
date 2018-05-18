@@ -30,10 +30,10 @@
                             VerticalAlignment="Top"
                             Background="Transparent"
                              Margin="0,0,15,0" FontSize="11">
-                        <AppBarButton Icon="Add" Click="ProfileAddButton_Click"/>
+                        <AppBarButton Icon="Add" Click="ProfileAddButton_Click" Style="{StaticResource AppBarButtonRevealStyle}"/>
                         <AppBarSeparator/>
-                    <AppBarButton Icon="Edit" Click="ProfileEditButton_Click"/>
-                    <AppBarButton Icon="Delete" Click="ProfileDeleteButton_Click"/>
+                    <AppBarButton Icon="Edit" Click="ProfileEditButton_Click" Style="{StaticResource AppBarButtonRevealStyle}"/>
+                    <AppBarButton Icon="Delete" Click="ProfileDeleteButton_Click" Style="{StaticResource AppBarButtonRevealStyle}"/>
                     <CommandBar.SecondaryCommands>
                         <AppBarButton Icon="Share" Label="Share" Click="ShareButton_Click"/>
                     </CommandBar.SecondaryCommands>
