@@ -21,19 +21,19 @@ The keyboard has to be in L0 mode by: pressing ```Fn+B, Fn+0, ESC, Fn+B, +```
 ### Sharing
 - [x] .kpi file extension
 - [x] Export profile
-- [x] Importing profiles
+- [x] Opening profiles
+- [x] Choosing export location
+- [x] Importing profiles in app
 - [ ] .kpis
-- [ ] Share profile
-- [ ] Choosing export location
+- [ ] Share profile externally
 - [ ] .kpi sharing site
 
 ### Statistics
-- [ ] Logging
-- [ ] Metrics (performance, crashing, etc.)
+- [ ] Logging (Debugging)
+- [ ] Metrics (Performance, crashing, versions, etc.)
 
 ### Versioning
 - [ ] Automatic updating
-- [ ] Version fragmentation data
 
 ## Bugs
 See GitHub issue tracker
