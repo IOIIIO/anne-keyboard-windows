@@ -52,8 +52,6 @@ namespace AnneProKeyboard
         private GattCharacteristic ReadGatt;
         private DeviceInformation KeyboardDeviceInformation;
 
-        //private ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
         private AboutPage aboutPage;
         private LayoutPage layoutPage;
         private LightingPage lightingPage;
@@ -64,7 +62,6 @@ namespace AnneProKeyboard
             initPages();
             this._frame.Content = layoutPage;
             FindKeyboard();
-            //CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
             lightingNavItem.Icon = new FontIcon { Glyph = "\uE706" };
             LoadProfiles();
             this._keyboardProfiles.CollectionChanged += KeyboardProfiles_CollectionChanged;
@@ -88,8 +85,6 @@ namespace AnneProKeyboard
 
         private void ProfileEditButton_Click(object sender, RoutedEventArgs e)
         {
-            //Button button = (Button)sender;
-            //FrameworkElement parent = (FrameworkElement)button.Parent;
             TextBox textbox = ProfileNameTextbox;
             textbox.IsEnabled = true;
             textbox.Visibility = Visibility.Visible;
@@ -148,10 +143,6 @@ namespace AnneProKeyboard
             TextBox textbox = (TextBox)sender;
             textbox.Visibility = Visibility.Collapsed;
             textbox.Text = "";
-            //FrameworkElement parent = (FrameworkElement)textbox.Parent;
-
-            //TextBlock textblock = (TextBlock)parent.FindName("ProfileNameTextblock");
-            //textblock.Visibility = Visibility.Collapsed;
 
             this.RenamingProfile = null;
         }
@@ -177,6 +168,12 @@ namespace AnneProKeyboard
 
             try
             {
+                var profileFileItem = await ApplicationData.Current.LocalFolder.TryGetItemAsync("KeyboardProfilesData");
+                if(profileFileItem == null)
+                {
+                    File.Create(ApplicationData.Current.LocalFolder.Path + "//KeyboardProfilesData").Close();
+                }
+
                 StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync("KeyboardProfilesData", CreationCollisionOption.ReplaceExisting);
                 using (Stream file_stream = await file.OpenStreamForWriteAsync())
                 {
@@ -194,10 +191,10 @@ namespace AnneProKeyboard
             {
                 this.SyncStatus.Text = "Failed to load file. Profiles not saved.";
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine("Uncaught Exception");
-                Console.Write(e);
+                Console.WriteLine("Uncaught Exception when saving profiles:");
+                Console.Write(ex);
             }
         }
 
@@ -209,8 +206,9 @@ namespace AnneProKeyboard
                 using (IInputStream inStream = await file.OpenSequentialReadAsync())
                 {
                     DataContractSerializer serialiser = new DataContractSerializer(typeof(ObservableCollection<KeyboardProfileItem>));
-                    ObservableCollection<KeyboardProfileItem> saved_profiles = (ObservableCollection<KeyboardProfileItem>)serialiser.ReadObject(inStream.AsStreamForRead());
-
+                    Stream rawStream = inStream.AsStreamForRead();
+                    ObservableCollection<KeyboardProfileItem> saved_profiles = (ObservableCollection<KeyboardProfileItem>)serialiser.ReadObject(rawStream);
+                    
                     foreach (KeyboardProfileItem profile in saved_profiles)
                     {
                         if (!_keyboardProfiles.Contains(profile))
@@ -220,8 +218,10 @@ namespace AnneProKeyboard
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine("Uncaught Exception when loading profiles:");
+                Console.Write(ex);
             }
 
             // UI init code
@@ -335,7 +335,7 @@ namespace AnneProKeyboard
 
         private void App_Suspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
         {
-            SaveProfiles();
+           // SaveProfiles();
 
             if (this.BluetoothDeviceWatcher != null)
             {
@@ -408,23 +408,42 @@ namespace AnneProKeyboard
                     return;
                 }
 
-                var service = keyboard.GetGattService(OAD_GUID);
+                var services = await keyboard.GetGattServicesAsync();
 
-                if (service == null)
+                if (services == null)
                 {
                     return;
                 }
 
-                var write_gatt = service.GetCharacteristics(WRITE_GATT_GUID)[0];
-                var read_gatt = service.GetCharacteristics(READ_GATT_GUID)[0];
-
-                if (write_gatt == null || read_gatt == null)
+                GattDeviceService oadService = null;
+                foreach (GattDeviceService service in services.Services)
                 {
-                    return;
+                    if (service.Uuid == OAD_GUID)
+                    {
+                        oadService = service;
+                        break;
+                    }
                 }
 
-                this.WriteGatt = write_gatt;
-                this.ReadGatt = read_gatt;
+                GattCharacteristicsResult characteristics = await oadService.GetCharacteristicsAsync();
+                GattCharacteristic writeGatt = null;
+                GattCharacteristic readGatt = null;
+
+                foreach (GattCharacteristic characteristic in characteristics.Characteristics)
+                {
+                    if (characteristic.Uuid == WRITE_GATT_GUID)
+                    {
+                        writeGatt = characteristic;
+                    }
+                    else if (characteristic.Uuid == READ_GATT_GUID)
+                    {
+                        readGatt = characteristic;
+                    }
+                }
+
+                this.WriteGatt = writeGatt;
+                this.ReadGatt = readGatt;
+                this.KeyboardDeviceInformation = device;
                 this.KeyboardDeviceInformation = device;
 
                 await this.ReadGatt.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
@@ -581,7 +600,7 @@ namespace AnneProKeyboard
             else
             {
                 NavigationViewItem item = args.SelectedItem as NavigationViewItem;
-
+                
                 switch (item.Tag)
                 {
                     case "layout":
