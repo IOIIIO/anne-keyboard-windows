@@ -1,12 +1,9 @@
 ﻿{
   "dependencies": {
-    "Coding4Fun.Toolkit.Controls": "2.1.8",
-    "ColorPicker": "1.0.2",
-    "Color_Picker": "1.0.5",
     "FontAwesome.UWP": "4.7.0.9",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.8",
-    "Microsoft.Toolkit.Uwp": "2.2.0",
-    "Microsoft.Toolkit.Uwp.UI.Controls": "2.2.0"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.5",
+    "Microsoft.Toolkit.Uwp": "3.0.0",
+    "Microsoft.Toolkit.Uwp.UI.Controls": "3.0.0"
   },
   "frameworks": {
     "uap10.0.16299": {}
