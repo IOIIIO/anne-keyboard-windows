@@ -1,3 +1,6 @@
+# Obins has released their own version of windows application. Its probably better than this. Use it instead, I won't be supporting this anymore.
+
+
 # Anne Keyboard Windows
 A Universal Windows App for controlling the Obins Anne Pro keyboard over Bluetooth Low Energy.  
 
@@ -24,9 +27,7 @@ The keyboard has to be in L0 mode by: pressing ```Fn+B, Fn+0, ESC, Fn+B, +```
 - [x] Opening profiles
 - [x] Choosing export location
 - [x] Importing profiles in app
-- [ ] .kpis
-- [ ] Share profile externally
-- [ ] .kpi sharing site
+- [X] .kpis
 
 ### Statistics
 - [ ] Logging (Debugging)
