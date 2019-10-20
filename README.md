@@ -1,5 +1,4 @@
-# Obins has released their own version of windows application. Its probably better than this. Use it instead, I won't be supporting this anymore.
-
+ObinsKit absolutely sucks, so I am reviving this until proven otherwise.
 
 # Anne Keyboard Windows
 A Universal Windows App for controlling the Obins Anne Pro keyboard over Bluetooth Low Energy.  

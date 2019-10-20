@@ -5,13 +5,16 @@
     xmlns:local="using:AnneProKeyboard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" MinWidth="960" MinHeight="480">
+    mc:Ignorable="d" d:DesignWidth="953.75" d:DesignHeight="498.031">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <WebView Name="aboutGitHub" Grid.Row="0" x:FieldModifier="public" Source="ms-appx-web:///Assets/README.html" />
-    </Grid>
+    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource HeaderTextBlockStyle}" Name="Title" Text="Anne UWP"></TextBlock>
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource BodyTextBlockStyle}" Name="Features" TextWrapping="Wrap" Text="A Universal Windows App designed to control the Obnis Anne Pro keyboard using Bluetooth Low Energy.&#x0a;&#x0a;Supports creating and managing profiles for the Anne Pro. Profiles can be exported and imported between copies of the software for portability when using multiple machines.&#x0a;Requires the keyboard to be in L0 mode, which can be done by pressing: Fn+B, Fn+0, ESC, Fn+B,"></TextBlock>
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource SubheaderTextBlockStyle}" Name="Supported"  Text="Supported Features:" VerticalAlignment="Top"></TextBlock>
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource BodyTextBlockStyle}" Name="SupportedF" TextWrapping="Wrap" Text="> Automatic keyboard pairing (launching the app will have it search for the keyboard)&#x0a;> Creating and managing profiles&#x0a;> Importing and exporting profiles&#x0a;> Managing keyboard backlight"></TextBlock>
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource SubheaderTextBlockStyle}" Name="License" Text="License:"></TextBlock>
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource BodyTextBlockStyle}" Name="LicenseD" TextWrapping="Wrap" Text="The codebase and the project are released under the permissive MIT License. The images and icons are generated using the Font Awesome font released under the OFIL license, and the font can be found on Github."></TextBlock>
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource SubheaderTextBlockStyle}" Name="Credits"  Text="Credits:"></TextBlock>
+        <TextBlock Margin="10 0 0 0" Style="{StaticResource BodyTextBlockStyle}" Name="CreditsD" TextWrapping="Wrap" Text="> kprinssu -  original Anne Keyboard Windows app.&#x0a;> Ethanmsmith - refinements to the app.&#x0a;> IOIIIO - reviving the repo, small improvements."/>
+    </StackPanel>
 </Page>
